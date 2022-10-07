@@ -4,17 +4,33 @@ from utils.alert import message_alert
 from datetime import datetime
 
 import yfinance as yf
+import platform
 
-logging.basicConfig(level=logging.INFO, filename='../price_alert/log/main.log',
-                    format='%(asctime)s :: %(levelname)s :: %(lineno)d :: '
-                           '%(funcName)s :: %(message)s :: %(filename)s',
-                    datefmt='%d-%b%y %H:%M:%S')
+system_os = platform.system()
+print(system_os)
+
+try:
+    if system_os == 'Linux' or 'MAC':
+        logging.basicConfig(level=logging.INFO, filename='../price_alert/log/main.log',
+                            format='%(asctime)s :: %(levelname)s :: %(lineno)d :: '
+                                   '%(funcName)s :: %(message)s :: %(filename)s',
+                            datefmt='%d-%b%y %H:%M:%S')
+    else:
+        logging.basicConfig(level=logging.INFO, filename='..\price_alert\log\main.log',
+                            format='%(asctime)s :: %(levelname)s :: %(lineno)d :: '
+                                   '%(funcName)s :: %(message)s :: %(filename)s',
+                            datefmt='%d-%b%y %H:%M:%S')
+
+except Exception as e:
+    print(e)
 
 
 class PriceAlert:
     def __init__(self, asset: str, waiting_time: float):
         self.waiting_time = waiting_time
         self.asset = asset
+        self.price_above = []
+        self.price_below = []
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__}: {', '.join([f'{key} = {value}' for key, value in self.__dict__.items()])}"
@@ -30,13 +46,11 @@ class PriceAlert:
     def check_price(self):
         try:
             current_price = self.getting_price()[1]
-            price_above = float(input(f"Type a price bigger than {round(current_price, 2)}: "))
-            price_bellow = float(input(f"Type a price less than {round(current_price, 2)}: "))
-            if round(current_price, 2) <= price_bellow:
-                message_alert(self.asset, price=round(current_price['Close'][-1], 2))
+            if round(current_price, 2) <= self.price_below[-1]:
+                message_alert(self.asset, price=round(current_price, 2))
                 quit()
-            if round(current_price, 2) >= price_above:
-                message_alert(self.asset, price=round(current_price['Close'][-1], 2))
+            if round(current_price, 2) >= self.price_above[-1]:
+                message_alert(self.asset, price=round(current_price, 2))
                 quit()
 
         except TypeError as e:
@@ -44,13 +58,15 @@ class PriceAlert:
             print('Please enter a float number: 10.0')
             quit()
 
-
-
     def price_alert_request(self):
         header(msg='Price Alert')
         print('Example: ticker= MSFT ')
-        print('Type a time in seconds to monitoring [5]: ')
-        print(self.getting_price()[1])
+        print(f'Make a new request in {self.waiting_time} seconds.')
+        current_price = self.getting_price()[1]
+        price_above = float(input(f"Type a price bigger than {round(current_price, 2)}: "))
+        self.price_above.append(price_above)
+        price_below = float(input(f"Type a price less than {round(current_price, 2)}: "))
+        self.price_below.append(price_below)
         schedule_function(function=self.check_price, time_seconds=self.waiting_time)
 
 
