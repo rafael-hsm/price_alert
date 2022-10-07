@@ -1,2 +1,11 @@
-# price_allert_rhsm
-Price allert
+# Price Alert
+
+## Usage
+
+### Installation
+
+`pip install price-alert-rhsm`
+
+### Tutorial
+
+``

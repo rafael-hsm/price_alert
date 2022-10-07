@@ -9,3 +9,6 @@ def getting_price(ticker):
     print(f'Consult at: {time_now}')
     print(f"Current price = $ {round(ticker_price['Close'][-1], 2)}")
     return time_now, ticker_price
+
+
+print(getting_price(ticker='TSLA'))
