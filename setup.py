@@ -7,14 +7,14 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="package_name",
+    name="price-alert-rhsm",
     version="0.0.1",
-    author="my_name",
-    author_email="my_email",
-    description="My short description",
+    author="Rafael Meireles",
+    author_email="rafameireles2011@gmail.com",
+    description="Script to monitoring price.",
     long_description=page_description,
     long_description_content_type="text/markdown",
-    url="my_github_repository_project_link"
+    url="https://github.com/rafael-hsm/price_alert",
     packages=find_packages(),
     install_requires=requirements,
     python_requires='>=3.8',

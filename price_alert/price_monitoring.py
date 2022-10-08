@@ -40,7 +40,8 @@ class PriceAlert:
         ticker_price = yf.Ticker(self.asset).history(interval="1m", period="1d")
         print(f'\nConsult at: {time_now}')
         print(f"Ticker {self.asset} - Current price = $ {round(ticker_price['Close'][-1], 2)}")
-
+        logging.info(time_now)
+        logging.info(ticker_price)
         return time_now, ticker_price['Close'][-1]
 
     def check_price(self):
@@ -63,9 +64,12 @@ class PriceAlert:
         print('Example: ticker= MSFT ')
         print(f'Make a new request in {self.waiting_time} seconds.')
         current_price = self.getting_price()[1]
+        logging.info(current_price)
         price_above = float(input(f"Type a price bigger than {round(current_price, 2)}: "))
+        logging.info(price_above)
         self.price_above.append(price_above)
         price_below = float(input(f"Type a price less than {round(current_price, 2)}: "))
+        logging.info(price_below)
         self.price_below.append(price_below)
         schedule_function(function=self.check_price, time_seconds=self.waiting_time)
 
