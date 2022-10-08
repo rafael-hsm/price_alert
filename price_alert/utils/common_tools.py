@@ -4,9 +4,7 @@ from time import sleep
 
 import schedule
 
-logging.basicConfig(level=logging.INFO, filename='main.log',
-                    format='%(asctime)s :: %(levelname)s :: %(lineno)d :: %(funcName)s :: %(message)s :: %(filename)s',
-                    datefmt='%d-%b%y %H:%M:%S')
+
 
 
 def header(msg: str):
@@ -24,8 +22,11 @@ def countdown(num_of_secs):
         num_of_secs -= 1
 
 
-def footer(msg='Waiting for new request'):
-    return msg.center(60)
+def footer(time: int):
+    print('=' * 60)
+    new_msg = f'Waiting {time} seconds for new request'
+    print('=' * 60)
+    return new_msg.center(60)
 
 
 def schedule_function(function, time_seconds):
@@ -33,7 +34,11 @@ def schedule_function(function, time_seconds):
         schedule.every(time_seconds).seconds.do(function)
         while True:
             schedule.run_pending()
+            print(f"{footer(time_seconds)}")
+            sleep(time_seconds)
     except KeyboardInterrupt:
         print('User stop the script!')
 
 
+if __name__ == '__main__':
+    logging.info(schedule_function(footer(), 2))
