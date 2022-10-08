@@ -1,5 +1,5 @@
-from utils.common_tools import *
-from utils.alert import message_alert
+from price_alert.utils.common_tools import *
+from price_alert.utils.alert import message_alert
 
 from datetime import datetime
 

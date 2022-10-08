@@ -5,8 +5,6 @@ from time import sleep
 import schedule
 
 
-
-
 def header(msg: str):
     print('=' * 60)
     print(msg.center(60))
