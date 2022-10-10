@@ -5,7 +5,7 @@ from tkinter import messagebox
 # another method of tkinter.
 
 def message_alert(asset, price):
-    return messagebox.showinfo(f"{asset}", f"Target the price{price}")
+    return messagebox.showinfo(f"{asset}", f"The stock has reached the price: {price}")
 
 
 if __name__ == '__main__':
