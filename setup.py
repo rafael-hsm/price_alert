@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="price-alert-rhsm",
-    version="0.0.2",
+    version="0.0.3",
     author="Rafael Meireles",
     author_email="rafameireles2011@gmail.com",
     description="Script to monitoring price.",
