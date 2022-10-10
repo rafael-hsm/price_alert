@@ -1,3 +1,5 @@
+import os
+
 from price_alert.utils.common_tools import *
 from price_alert.utils.alert import message_alert
 
@@ -7,16 +9,16 @@ import yfinance as yf
 import platform
 
 system_os = platform.system()
-print(system_os)
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 try:
     if system_os == 'Linux' or 'MAC':
-        logging.basicConfig(level=logging.INFO, filename='../price_alert/log/main.log',
+        logging.basicConfig(level=logging.INFO, filename=f'{dir_path}' + '/main.log',
                             format='%(asctime)s :: %(levelname)s :: %(lineno)d :: '
                                    '%(funcName)s :: %(message)s :: %(filename)s',
                             datefmt='%d-%b%y %H:%M:%S')
     else:
-        logging.basicConfig(level=logging.INFO, filename='..\price_alert\log\main.log',
+        logging.basicConfig(level=logging.INFO, filename=f'{dir_path}' + '\main.log',
                             format='%(asctime)s :: %(levelname)s :: %(lineno)d :: '
                                    '%(funcName)s :: %(message)s :: %(filename)s',
                             datefmt='%d-%b%y %H:%M:%S')
